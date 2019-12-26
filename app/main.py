@@ -1,9 +1,39 @@
 from flask import Flask,jsonify
 from flask_restplus import Api,Resource,fields
 
+
 # objs
 app = Flask(__name__)
 api = Api(app, version='1.0', title='Task Management API',description='A simple task manager api') #,doc='/docs'
+
+
+# error handling
+# resource not found
+@app.errorhandler(404)
+def resource_not_found(e):
+    # note that we set the 404 status explicitly
+    return jsonify({"message":"Resource not found"}), 404
+
+# bad request
+@app.errorhandler(400)
+def bad_request(e):
+    # note that we set the 400 status explicitly
+    return jsonify({"message":"Check your request body"}), 400
+
+# method not allowes
+@app.errorhandler(405)
+def bad_request(e):
+    # note that we set the 400 status explicitly
+    return jsonify({"message":"Check your request body"}), 405
+
+
+# internal server error
+@app.errorhandler(500)
+def internal_server_error(e):
+    # note that we set the 404 status explicitly
+    return jsonify({"message":"There was a problem with the server"}), 500
+
+
 
 tasks = [
     {
