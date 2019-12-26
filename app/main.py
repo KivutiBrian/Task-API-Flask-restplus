@@ -90,11 +90,14 @@ class Task(Resource):
         # user the inbuilt filter() function to get a task that matches the id provided
         task = filter(lambda anDict: anDict['id'] == id, tasks)
         theTask = list(task)[0]
+        # get the payload
         payload = api.payload
+        # perform the updates
         if u'task' in payload:
             theTask['task'] = payload['task']
         if u'description' in payload:
             theTask['description'] = payload['description']
+
         print(theTask)
 
         return {"message":"task successfully updated!"}
